@@ -2,7 +2,8 @@ name: Pull Reqest Workflow
 
 on:
   pull_request:
-    branches: [ "master" ]
+    branches:
+      - ${{ github.event.pull_request.head.ref }}
 
 env:
   REGISTRY: ghcr.io
