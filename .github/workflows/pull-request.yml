@@ -57,6 +57,9 @@ jobs:
       with:
         name: jar
 
+    - name: Check directory
+      run: ls
+
     - name: Run jar
       run: java -jar devops-final-0.0.1-SNAPSHOT.jar &
       
