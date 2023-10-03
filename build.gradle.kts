@@ -32,9 +32,6 @@ tasks.withType<Test> {
 
 testing {
     suites {
-        val test by getting(JvmTestSuite::class) {
-            useJUnitJupiter()
-        }
 
         register<JvmTestSuite>("integrationTest") {
             dependencies {
