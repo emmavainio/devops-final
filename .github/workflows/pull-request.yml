@@ -92,7 +92,7 @@ jobs:
       run: |
         mkdir build
         mkdir build/libs
-        mv devops-final-0.0.1-SNAPSHOT.jar build/libs
+        mv devops-final-0.0.1-SNAPSHOT.jar build/libs/devops-final-0.0.1-SNAPSHOT.jar
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
