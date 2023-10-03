@@ -43,7 +43,7 @@ jobs:
     - name: Run Test Job 1
       run: |
         echo "Running contextLoads..."
-        ./gradlew test --tests 'com.example.devops-final.DevopsUppg3ApplicationTests'
+        ./gradlew test --tests 'com.example.devops-final.DevopsFinalApplicationTests'
 
   unit-test:
     runs-on: ubuntu-latest
