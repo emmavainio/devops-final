@@ -39,9 +39,16 @@ testing {
         register<JvmTestSuite>("integrationTest") {
             dependencies {
                 implementation(project())
-                implementation("io.rest-assured:rest-assured:5.3.2")
                 implementation("org.springframework.boot:spring-boot-starter-web")
                 implementation("org.springframework.boot:spring-boot-starter-test")
+            }
+        }
+
+        register<JvmTestSuite>("systemTest") {
+            dependencies {
+                implementation(project())
+                implementation("io.rest-assured:rest-assured:5.3.2")
+
             }
         }
     }

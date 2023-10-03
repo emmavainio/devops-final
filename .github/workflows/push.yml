@@ -57,5 +57,5 @@ jobs:
     - name: Make Gradle Wrapper script executable
       run: chmod +x ./gradlew
     - name: Run Integration Tests
-      run: ./gradlew integrationTest --tests="com.example.devopsfinal.*" --tests="!com.example.devopsfinal.SystemTest"
+      run: ./gradlew integrationTest
 
