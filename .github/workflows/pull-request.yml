@@ -1,7 +1,7 @@
 name: Pull Reqest Workflow
 
 on:
-  push:
+  pull_request:
     branches: [ "master" ]
 
 env:
