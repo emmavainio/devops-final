@@ -1,11 +1,11 @@
 package com.example.devopsfinal;
 
 import io.restassured.RestAssured;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 public class SystemTest {
 
@@ -28,13 +28,13 @@ public class SystemTest {
                 post("/api/add").
                 then().
                 statusCode(200)
-                .body(equalTo("Task added!"));
+                .body(IsEqual.equalTo("Task added!"));
         given().
                 when().
                 get("/api/list").
                 then().
                 statusCode(200)
-                .body(equalTo("[\"test\"]"));
+                .body(IsEqual.equalTo("[\"test\"]"));
     }
 
     @Test
@@ -50,7 +50,7 @@ public class SystemTest {
                 post("/api/add").
                 then().
                 statusCode(200)
-                .body(equalTo("Task added!"));
+                .body(IsEqual.equalTo("Task added!"));
     }
 
     @Test
@@ -66,7 +66,7 @@ public class SystemTest {
                 post("/api/add").
                 then().
                 statusCode(200)
-                .body(equalTo("Task added!"));
+                .body(IsEqual.equalTo("Task added!"));
         given().
                 param("task", "test2").
                 param("index", 0).
@@ -89,7 +89,7 @@ public class SystemTest {
                 post("/api/add").
                 then().
                 statusCode(200)
-                .body(equalTo("Task added!"));
+                .body(IsEqual.equalTo("Task added!"));
         given().
                 param("index", 0).
                 when().
@@ -97,5 +97,4 @@ public class SystemTest {
                 then().
                 statusCode(200);
     }
-    
 }

@@ -1,5 +1,6 @@
 plugins {
     java
+    `jvm-test-suite`
     id("org.springframework.boot") version "3.1.4"
     id("io.spring.dependency-management") version "1.1.3"
 }
@@ -23,12 +24,25 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-}
 
-tasks.test {
     testLogging {
-        events("passed")
+        events("passed", "failed")
     }
 }
 
+testing {
+    suites {
+        val test by getting(JvmTestSuite::class) {
+            useJUnitJupiter()
+        }
 
+        register<JvmTestSuite>("integrationTest") {
+            dependencies {
+                implementation(project())
+                implementation("io.rest-assured:rest-assured:5.3.2")
+                implementation("org.springframework.boot:spring-boot-starter-web")
+                implementation("org.springframework.boot:spring-boot-starter-test")
+            }
+        }
+    }
+}
