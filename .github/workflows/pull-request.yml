@@ -36,6 +36,7 @@ jobs:
         path: build/libs/devops-final-0.0.1-SNAPSHOT.jar
   
   system-test:
+    needs: build-upload-artifact
     runs-on: ubuntu-latest
     steps:
     - name: Check out code
@@ -60,6 +61,7 @@ jobs:
       run: ./gradlew systemTest
 
   build-and-push-image:
+    needs: [build-upload-artifact, system-test]
     runs-on: ubuntu-latest
 
     permissions:
