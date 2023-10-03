@@ -88,20 +88,16 @@ jobs:
       with:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-    - name: Check directory
-      run: ls
-
-    - name: Print workspace path
-      run: echo $GITHUB_WORKSPACE
+    - name: download artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: jar
     
-    - name: Create new folder
+    - name: Create new folder and move JAR
       run: |
         mkdir build
         mkdir build/libs
         mv devops-final-0.0.1-SNAPSHOT.jar build/libs/devops-final-0.0.1-SNAPSHOT.jar
-
-    - name: Move JAR
-      run: mv devops-final-0.0.1-SNAPSHOT.jar build/libs/devops-final-0.0.1-SNAPSHOT.jar
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
