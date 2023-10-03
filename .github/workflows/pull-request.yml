@@ -41,18 +41,17 @@ jobs:
     steps:
     - name: Check out code
       uses: actions/checkout@v4
+      
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Make Gradle Wrapper script executable
-      run: chmod +x ./gradlew
 
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
+    - name: download artifact
+      uses: actions/download-artifact@v3
       with:
-        arguments: build
+        name: jar
 
     - name: Run jar
       run: java -jar build/libs/devops-final-0.0.1-SNAPSHOT.jar &
