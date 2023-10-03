@@ -57,7 +57,7 @@ jobs:
         name: jar
 
     - name: Run jar
-      run: java -jar build/libs/devops-final-0.0.1-SNAPSHOT.jar &
+      run: java -jar devops-final-0.0.1-SNAPSHOT.jar &
       
     - name: Run System Test
       run: ./gradlew systemTest
