@@ -1,9 +1,8 @@
 plugins {
     java
-    `jvm-test-suite`
-    id("jacoco")
     id("org.springframework.boot") version "3.1.4"
     id("io.spring.dependency-management") version "1.1.3"
+    id("jacoco")
 }
 
 group = "com.example"
@@ -27,41 +26,59 @@ dependencies {
     testImplementation("io.rest-assured:rest-assured:5.3.2")
 }
 
-tasks.withType<Test> {
+sourceSets {
+    create("integrationTest") {
+        java.srcDir("src/integrationTest/java")
+        compileClasspath += sourceSets["main"].output + sourceSets["test"].output
+        runtimeClasspath += sourceSets["main"].output + sourceSets["test"].output
+    }
+    create("systemTest") {
+        java.srcDir("src/systemTest/java")
+    }
+}
+
+configurations {
+    named("integrationTestImplementation") {
+        extendsFrom(configurations["testImplementation"])
+    }
+    named("integrationTestRuntimeOnly") {
+        extendsFrom(configurations["testRuntimeOnly"])
+    }
+    named("systemTestImplementation") {
+        extendsFrom(configurations["testImplementation"])
+    }
+    named("systemTestRuntimeOnly") {
+        extendsFrom(configurations["testRuntimeOnly"])
+    }
+}
+
+tasks.register<Test>("integrationTest") {
     useJUnitPlatform()
-
     testLogging {
-        events("passed", "failed", "skipped")
+        events("PASSED", "FAILED", "SKIPPED")
     }
+    testClassesDirs = sourceSets["integrationTest"].output.classesDirs
+    classpath = sourceSets["integrationTest"].runtimeClasspath
 }
 
-testing {
-    suites {
-
-        register<JvmTestSuite>("integrationTest") {
-            dependencies {
-                implementation(project())
-                implementation("org.springframework.boot:spring-boot-starter-web")
-                implementation("org.springframework.boot:spring-boot-starter-test")
-            }
-        }
-
-        register<JvmTestSuite>("systemTest") {
-            dependencies {
-                implementation(project())
-                implementation("io.rest-assured:rest-assured:5.3.2")
-
-            }
-        }
+tasks.register<Test>("systemTest") {
+    useJUnitPlatform()
+    testLogging {
+        events("PASSED", "FAILED", "SKIPPED")
     }
+    testClassesDirs = sourceSets["systemTest"].output.classesDirs
+    classpath = sourceSets["systemTest"].runtimeClasspath
 }
 
-tasks.test {
-    finalizedBy(tasks.jacocoTestReport) // Report genereras efter testerna har körts
+tasks.named<Test>("test") {
+    useJUnitPlatform()
+    testLogging {
+        events("PASSED", "FAILED", "SKIPPED")
+    }
+    finalizedBy("jacocoTestReport")
 }
 
-tasks.jacocoTestReport {
-    dependsOn(tasks.test) // Kör tester innan rapporten genereras
+tasks.named<JacocoReport>("jacocoTestReport") {
     reports {
         xml.required.set(true)
         html.required.set(true)
