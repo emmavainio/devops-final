@@ -113,3 +113,13 @@ jobs:
         push: true
         tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.pull_request.head.ref }}
         labels: ${{ steps.meta.outputs.labels }}
+  
+  fake-deploy-stage:
+    needs: build-and-push-image
+    runs-on: ubuntu-latest
+    steps:
+        - name: echo stage deploy
+          run: |
+            run: |
+            IMAGE_NAME="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.pull_request.head.ref }}"
+            echo "Deploying $IMAGE_NAME"

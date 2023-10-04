@@ -1,37 +1,45 @@
-name: Push workflow, unit tests, test env deploy
+name: Push workflow, tests, deploy to prod if master
 
 on:   
   push:
     branches:
       - '*'
-    paths:
-      - '!master'
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:        
-  build:
+  build-upload-artifact:
     runs-on: ubuntu-latest
-    
     steps:
-    - uses: actions/checkout@v4
+    - name: Check out code
+      uses: actions/checkout@v4
+      
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
+        
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+    
     - name: Make Gradle Wrapper script executable
       run: chmod +x ./gradlew
+      
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
+      run: ./gradlew build
+      
+    - name: Upload JAR artifact
+      uses: actions/upload-artifact@v3
       with:
-        arguments: build
+        name: jar
+        path: build/libs/devops-final-0.0.1-SNAPSHOT.jar
 
   unit-test:
     runs-on: ubuntu-latest
-    needs: build
+    needs: build-upload-artifact
     
     steps:
     - name: Check out code
@@ -48,7 +56,7 @@ jobs:
 
   integration-test:
     runs-on: ubuntu-latest
-    needs: build
+    needs: unit-test
     
     steps:
     - name: Check out code
@@ -63,8 +71,37 @@ jobs:
     - name: Run Integration Tests
       run: ./gradlew integrationTest
 
+  system-test:
+    if: github.ref == 'refs/heads/master'
+    needs: integration-test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Make Gradle Wrapper script executable
+      run: chmod +x ./gradlew
+
+    - name: download artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: jar
+
+    - name: Run jar
+      run: java -jar devops-final-0.0.1-SNAPSHOT.jar &
+      
+    - name: Run System Test
+      run: ./gradlew systemTest
+
   build-and-push-image:
-    needs: [build, unit-test, integration-test]
+    if: github.ref == 'refs/heads/master'
+    needs: [build-upload-artifact, unit-test, integration-test, system-test]
     runs-on: ubuntu-latest
 
     permissions:
@@ -108,15 +145,16 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.pull_request.head.ref }}
+        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
         labels: ${{ steps.meta.outputs.labels }}
   
-  fake-deploy:
+  fake-deploy-prod:
+    if: github.ref == 'refs/heads/master'
     needs: build-and-push-image
     runs-on: ubuntu-latest
     steps:
         - name: echo deploy
           run: |
             run: |
-            IMAGE_NAME="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.pull_request.head.ref }}"
-            echo "Deploying $IMAGE_NAME"
+            IMAGE_NAME="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}"
+            echo "Deploying to prod: $IMAGE_NAME"
