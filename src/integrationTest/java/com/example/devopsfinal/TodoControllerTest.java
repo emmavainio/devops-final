@@ -26,7 +26,7 @@ public class TodoControllerTest {
     @Test
     public void testAddTask_ShouldAddTask() throws Exception {
 
-        mockMvc.perform(get("/api/emptyList"))
+        mockMvc.perform(get("/api/emptyListFEL"))
                 .andExpect(status().isOk());
 
         mockMvc.perform(post("/api/add?task=testAddTask"))
