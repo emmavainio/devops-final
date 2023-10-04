@@ -18,7 +18,7 @@ public class TodoController {
         todoService.addTask(task);
         return ResponseEntity.ok("Task added!");
     }
-    //combine the two above methods into one
+    //En liten kommentar
 
     @PostMapping("/modify")
     public ResponseEntity<String> modifyTask(String task, int index) {
