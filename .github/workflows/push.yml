@@ -89,12 +89,6 @@ jobs:
       
     - name: Build with Gradle
       run: ./gradlew build
-
-    - name: Create new folder and move JAR
-      run: |
-        mkdir build
-        mkdir build/libs
-        mv devops-final-0.0.1-SNAPSHOT.jar build/libs/devops-final-0.0.1-SNAPSHOT.jar
     
     - name: Log in to the Container registry
       uses: docker/login-action@v3
