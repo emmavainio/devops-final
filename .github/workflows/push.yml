@@ -8,6 +8,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  TAG_NAME: ${{ github.ref_name }}
 
 jobs:        
   build-upload-artifact:
@@ -155,6 +156,4 @@ jobs:
     steps:
         - name: echo deploy
           run: |
-            run: |
-            GHCR_IMAGE_NAME="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}"
-            echo "Deploying to prod: $GHCR_IMAGE_NAME"
+            echo "Deploying to prod: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }}"
