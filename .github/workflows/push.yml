@@ -111,7 +111,8 @@ jobs:
         tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.pull_request.head.ref }}
         labels: ${{ steps.meta.outputs.labels }}
   
-  fake-deploy:
+  fake-deploy-prod:
+    if: github.ref == 'refs/heads/master'
     needs: build-and-push-image
     runs-on: ubuntu-latest
     steps:
@@ -119,4 +120,4 @@ jobs:
           run: |
             run: |
             IMAGE_NAME="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.pull_request.head.ref }}"
-            echo "Deploying $IMAGE_NAME"
+            echo "Deploying to prod: $IMAGE_NAME"
