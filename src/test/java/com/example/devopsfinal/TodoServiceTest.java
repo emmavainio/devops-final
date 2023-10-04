@@ -12,7 +12,7 @@ public class TodoServiceTest {
     @Test
     public void addTaskTest_ShouldAddTask() {
         todoService.addTask("test");
-        Assertions.assertEquals(todoService.listTasks().get(0), "test");
+        Assertions.assertEquals(todoService.listTasks().get(0), "testFEL");
     }
 
     @Test
