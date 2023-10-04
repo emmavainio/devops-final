@@ -8,6 +8,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  TAG_NAME: ${{ github.ref_name }}
 
 jobs:  
   build-upload-artifact:
@@ -105,9 +106,6 @@ jobs:
         mkdir build
         mkdir build/libs
         mv devops-final-0.0.1-SNAPSHOT.jar build/libs/devops-final-0.0.1-SNAPSHOT.jar
-
-    - name: Set TAG_NAME to the branch name
-      run: echo "TAG_NAME=$(basename $GITHUB_REF)" >> $GITHUB_ENV
     
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
