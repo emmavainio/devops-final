@@ -107,7 +107,7 @@ jobs:
 
   build-and-push-image:
     if: github.ref == 'refs/heads/master'
-    needs: [build-upload-artifact, unit-test, integration-test, system-test]
+    needs: [build-upload-artifact, unit-and-coverage-test, integration-test, system-test]
     runs-on: ubuntu-latest
 
     permissions:
