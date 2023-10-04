@@ -54,11 +54,11 @@ jobs:
       run: chmod +x ./gradlew
     - name: Run Unit Test
       run: ./gradlew test
-    - name: Upload JaCoCo Report
+    - name: Upload Jacoco Report
       uses: actions/upload-artifact@v3
       with:
-        name: JaCoCo
-        path: build/reports/jacoco/test/html/index.html
+        name: jacoco-report
+        path: build/reports/jacoco/test/html
 
   integration-test:
     runs-on: ubuntu-latest
