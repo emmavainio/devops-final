@@ -3,7 +3,7 @@ name: Pull Reqest Workflow
 on:
   pull_request:
     branches:
-      - feature/*
+      - master
 
 env:
   REGISTRY: ghcr.io
