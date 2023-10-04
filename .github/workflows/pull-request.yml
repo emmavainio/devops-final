@@ -121,5 +121,5 @@ jobs:
         - name: echo stage deploy
           run: |
             run: |
-            IMAGE_NAME="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.pull_request.head.ref }}"
-            echo "Deploying $IMAGE_NAME"
+            GHCR_IMAGE_NAME="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.pull_request.head.ref }}"
+            echo "Deploying $GHCR_IMAGE_NAME"
