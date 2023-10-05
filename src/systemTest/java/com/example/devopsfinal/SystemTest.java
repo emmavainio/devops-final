@@ -7,14 +7,23 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 
+/**
+ * A set of system tests for the TodoController class using RestAssured.
+ */
 public class SystemTest {
 
+    /**
+     * Set up the base URI for RestAssured before each test.
+     */
     @BeforeEach
     void setUp() {
         RestAssured.baseURI = "http://localhost:8080";
     }
 
 
+    /**
+     * Test the 'getListTest' method, which should return a 200 status code and a list.
+     */
     @Test
     void getListTest_ShouldReturn200AndList() {
         given().
@@ -37,6 +46,9 @@ public class SystemTest {
                 .body(IsEqual.equalTo("[\"test\"]"));
     }
 
+    /**
+     * Test the 'addTaskTest' method, which should return a 200 status code and a confirmation.
+     */
     @Test
     void addTaskTest_ShouldReturn200AndConfirmation() {
         given().
@@ -53,6 +65,9 @@ public class SystemTest {
                 .body(IsEqual.equalTo("Task added!"));
     }
 
+    /**
+     * Test the 'modifyTaskTest' method, which should return a 200 status code and a confirmation.
+     */
     @Test
     void modifyTaskTest_ShouldReturn200AndConfirmation() {
         given().
@@ -76,6 +91,9 @@ public class SystemTest {
                 statusCode(200);
     }
 
+    /**
+     * Test the 'deleteTaskTest' method, which should return a 200 status code and a confirmation.
+     */
     @Test
     void deleteTaskTest_ShouldReturn200AndConfirmation() {
         given().

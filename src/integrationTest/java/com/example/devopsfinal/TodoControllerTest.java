@@ -1,5 +1,7 @@
 package com.example.devopsfinal;
 
+import java.util.List;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,13 +9,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.List;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+/**
+ * Test class for the {@link TodoController} class.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class TodoControllerTest {
@@ -23,6 +26,11 @@ public class TodoControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    /**
+     * Test case to ensure that adding a task works correctly.
+     *
+     * @throws Exception If there is an exception during the test.
+     */
     @Test
     public void testAddTask_ShouldAddTask() throws Exception {
 
@@ -41,6 +49,11 @@ public class TodoControllerTest {
 
     }
 
+    /**
+     * Test case to ensure that modifying a task works correctly.
+     *
+     * @throws Exception If there is an exception during the test.
+     */
     @Test
     void testModifyTask_ShouldModifyTask() throws Exception {
 
@@ -58,6 +71,11 @@ public class TodoControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(List.of("testModified"))));
     }
 
+    /**
+     * Test case to ensure that deleting a task works correctly.
+     *
+     * @throws Exception If there is an exception during the test.
+     */
     @Test
     void testDeleteTask_ShouldDeleteTask() throws Exception {
 
@@ -75,6 +93,11 @@ public class TodoControllerTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(List.of())));
     }
 
+    /**
+     * Test case to ensure that listing all tasks works correctly.
+     *
+     * @throws Exception If there is an exception during the test.
+     */
     @Test
     void testListTasks_ShouldListAllTasks() throws Exception {
 
@@ -94,6 +117,11 @@ public class TodoControllerTest {
 
     }
 
+    /**
+     * Test case to ensure that emptying the task list works correctly.
+     *
+     * @throws Exception If there is an exception during the test.
+     */
     @Test
     void emptyList() throws Exception {
 
