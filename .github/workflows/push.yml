@@ -58,7 +58,12 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: jacoco-report
-        path: build/reports/jacoco/test/html
+        path: build/reports/jacoco/test/jacocoTestReport.xml
+    - name: Upload JaCoCo Report to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./build/reports/jacoco/test/jacocoTestReport.xml
 
   integration-test:
     runs-on: ubuntu-latest
