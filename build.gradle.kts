@@ -91,8 +91,9 @@ tasks.named<JacocoReport>("jacocoTestReport") {
 }
 
 checkstyle {
-    configFile = file("${project.rootDir}/config/checkstyle/google_checks.xml")
     toolVersion = "10.12.4"
+    maxWarnings = 10
+    configFile = file("${project.rootDir}/config/checkstyle/google_checks.xml")
     reportsDir = file("${project.buildDir}/checkstyle")
 }
 
