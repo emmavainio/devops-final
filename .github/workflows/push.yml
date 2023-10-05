@@ -79,7 +79,7 @@ jobs:
     - name: Make Gradle Wrapper script executable
       run: chmod +x ./gradlew
     - name: Run Checkstyle
-      run: ./gradlew checkstyleMain checkstyleTest
+      run: ./gradlew checkstyleMain checkstyleTest checkstyleIntegrationTest checkstyleSystemTest
     - name: Upload Checkstyle Report
       uses: actions/upload-artifact@v3
       with:
