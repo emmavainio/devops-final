@@ -26,23 +26,23 @@ public class SystemTest {
      */
     @Test
     void getListTest_ShouldReturn200AndList() {
-        given().
-                when().
-                get("/api/emptyList").
-                then().
-                statusCode(200);
-        given().
-                param("task", "test").
-                when().
-                post("/api/add").
-                then().
-                statusCode(200)
+        given()
+                .when()
+                .get("/api/emptyList")
+                .then()
+                .statusCode(200);
+        given()
+                .param("task", "test")
+                .when()
+                .post("/api/add")
+                .then()
+                .statusCode(200)
                 .body(IsEqual.equalTo("Task added!"));
-        given().
-                when().
-                get("/api/list").
-                then().
-                statusCode(200)
+        given()
+                .when()
+                .get("/api/list")
+                .then()
+                .statusCode(200)
                 .body(IsEqual.equalTo("[\"test\"]"));
     }
 
@@ -51,17 +51,17 @@ public class SystemTest {
      */
     @Test
     void addTaskTest_ShouldReturn200AndConfirmation() {
-        given().
-                when().
-                get("/api/emptyList").
-                then().
-                statusCode(200);
-        given().
-                param("task", "test").
-                when().
-                post("/api/add").
-                then().
-                statusCode(200)
+        given()
+                .when()
+                .get("/api/emptyList")
+                .then()
+                .statusCode(200);
+        given()
+                .param("task", "test")
+                .when()
+                .post("/api/add")
+                .then()
+                .statusCode(200)
                 .body(IsEqual.equalTo("Task added!"));
     }
 
@@ -70,25 +70,25 @@ public class SystemTest {
      */
     @Test
     void modifyTaskTest_ShouldReturn200AndConfirmation() {
-        given().
-                when().
-                get("/api/emptyList").
-                then().
-                statusCode(200);
-        given().
-                param("task", "test").
-                when().
-                post("/api/add").
-                then().
-                statusCode(200)
+        given()
+                .when()
+                .get("/api/emptyList")
+                .then()
+                .statusCode(200);
+        given()
+                .param("task", "test")
+                .when()
+                .post("/api/add")
+                .then()
+                .statusCode(200)
                 .body(IsEqual.equalTo("Task added!"));
-        given().
-                param("task", "test2").
-                param("index", 0).
-                when().
-                post("/api/modify").
-                then().
-                statusCode(200);
+        given()
+                .param("task", "test2")
+                .param("index", 0)
+                .when()
+                .post("/api/modify")
+                .then()
+                .statusCode(200);
     }
 
     /**
@@ -96,23 +96,23 @@ public class SystemTest {
      */
     @Test
     void deleteTaskTest_ShouldReturn200AndConfirmation() {
-        given().
-                when().
-                get("/api/emptyList").
-                then().
-                statusCode(200);
-        given().
-                param("task", "test").
-                when().
-                post("/api/add").
-                then().
-                statusCode(200)
+        given()
+                .when()
+                .get("/api/emptyList")
+                .then()
+                .statusCode(200);
+        given()
+                .param("task", "test")
+                .when()
+                .post("/api/add")
+                .then()
+                .statusCode(200)
                 .body(IsEqual.equalTo("Task added!"));
-        given().
-                param("index", 0).
-                when().
-                post("/api/delete").
-                then().
-                statusCode(200);
+        given()
+                .param("index", 0)
+                .when()
+                .post("/api/delete")
+                .then()
+                .statusCode(200);
     }
 }
