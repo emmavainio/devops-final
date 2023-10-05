@@ -122,11 +122,3 @@ jobs:
         - name: echo stage deploy
           run: |
             echo "Deploying to prod: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }}"
-
-  set-pr-check-status:
-    runs-on: ubuntu-latest
-    needs: [build-upload-artifact, system-test, build-and-push-image, fake-deploy-stage]
-    steps:
-      - name: Set PR check status
-        id: pr_status
-        run: echo "PR_CHECK=success" >> $GITHUB_ENV
