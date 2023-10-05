@@ -149,7 +149,7 @@
     <module name="SeparatorWrap">
       <property name="id" value="SeparatorWrapDot"/>
       <property name="tokens" value="DOT"/>
-      <property name="option" value="same"/>
+      <property name="option" value="nl"/>
     </module>
     <module name="SeparatorWrap">
       <property name="id" value="SeparatorWrapComma"/>
