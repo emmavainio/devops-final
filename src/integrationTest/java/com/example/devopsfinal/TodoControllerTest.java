@@ -1,8 +1,7 @@
 package com.example.devopsfinal;
 
-import java.util.List;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -40,13 +39,9 @@ public class TodoControllerTest {
         mockMvc.perform(post("/api/add?task=testAddTask"))
                 .andExpect(status().isOk());
 
-//        mockMvc.perform(get("/api/add").param("task", "Test Task"))
-//                .andExpect(status().isOk());
-
         mockMvc.perform(get("/api/list"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(List.of("testAddTask"))));
-
     }
 
     /**
