@@ -3,6 +3,7 @@ plugins {
     id("org.springframework.boot") version "3.1.4"
     id("io.spring.dependency-management") version "1.1.3"
     id("jacoco")
+    checkstyle
 }
 
 group = "com.example"
@@ -78,9 +79,27 @@ tasks.named<Test>("test") {
     finalizedBy("jacocoTestReport")
 }
 
+tasks.named<Test>("integrationTest") {
+    finalizedBy("jacocoTestReport")
+}
+
 tasks.named<JacocoReport>("jacocoTestReport") {
     reports {
         xml.required.set(true)
         html.required.set(true)
     }
 }
+
+checkstyle {
+    configFile = file("${project.rootDir}/config/checkstyle/google_checks.xml")
+    toolVersion = "10.12.4"
+    reportsDir = file("${project.buildDir}/checkstyle")
+}
+
+tasks.withType<Checkstyle> {
+    reports {
+        xml.required.set(false)
+        html.required.set(true)
+    }
+}
+
